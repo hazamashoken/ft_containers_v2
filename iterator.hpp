@@ -6,14 +6,12 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:35:11 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/10 13:59:21 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/01/28 17:53:36 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
-
-# include <iostream>
 
 # include "utils/type_traits.hpp"
 # include "iterator_base.hpp"
@@ -47,12 +45,6 @@ namespace ft
 			base_iterator& operator=(const base_iterator& base_it)
 			{
 				_ptr = base_it._ptr;
-				return *this;
-			}
-
-			base_iterator& operator=(const pointer& ptr)
-			{
-				_ptr = ptr;
 				return *this;
 			}
 
