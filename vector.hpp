@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:08:00 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/18 00:34:26 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/02/20 17:23:57 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,36 @@ namespace ft
 				return _start;
 			}
 
+			void
+			_M_realloc_insert(iterator __position, const value_type& __x)
+			{
+				const size_type __len = _M_check_len_err(1, "vector::_M_realloc_insert");
+				pointer __old_start = this->_start;
+				pointer __old_finish = this->_finish;
+				const size_type __elems_before = __position - begin();
+				pointer __new_start(this->_M_allocate(__len));
+				pointer __new_finish(__new_start);
+				try
+				{
+					this->_alloc.construct(__new_start + __elems_before, __x);
+					__new_finish = _M_uninitialized_copy(__old_start, __position.base(), __new_start);
+					++__new_finish;
+					__new_finish = _M_uninitialized_copy(__position.base(), __old_finish, __new_finish);
+
+				}
+				catch(...)
+				{
+					_M_destroy(__new_start, __new_finish);
+					_M_deallocate(__new_start, __len);
+					throw;
+				}
+				_M_destroy(__old_start, __old_finish);
+				_M_deallocate(__old_start, this->_end_of_storage - __old_start);
+				this->_start = __new_start;
+				this->_finish = __new_finish;
+				this->_end_of_storage = __new_start + __len;
+			}
+
 			/// @brief fill uninitialized memory with val via construct
 			/// @param first pointer to the first element to be filled
 			/// @param n number of elements to be filled
@@ -206,44 +236,120 @@ namespace ft
 			}
 
 			void
-			_M_fill_insert(iterator __position, size_type __n, const value_type& __x)
+			_M_fill_insert_2(iterator __position, size_type __n, const value_type& __x)
 			{
 				if (__n != 0)
 				{
 					// _D_debug();
 					if (size_type(this->_end_of_storage - this->_finish) >= __n)
 					{
-						// std::cout << "\033[1;30m" << "size_type(this->_end_of_storage - this->_finish) >= __n" << "\033[0m" << std::endl;
+						// std::cout << "\033[1;30m" << "enough" << "\033[0m" << std::endl;
 						value_type __x_copy = __x;
-						size_type offset;
 						const size_type __elems_after = end() - __position;
+						pointer __old_finish(this->_finish);
 						if (__elems_after > __n)
 						{
-							// std::cout << "\033[1;31m" << "(__elems_after > __n)" << "\033[0m" << std::endl;
-							offset = __elems_after - __n;
+							// std::cout << "\033[1;33m" << "(__elems_after > __n)" << "\033[0m" << std::endl;
 							_M_uninitialized_copy(this->_finish - __n, this->_finish, this->_finish);
 							this->_finish += __n;
-							std::copy_backward(__position, __position + offset, __position + __elems_after);
-							std::fill_n(__position, __n, __x_copy);
+							std::copy_backward(__position.base(), __old_finish - __n, __old_finish);
+							std::fill(__position.base(), __position.base() + __n, __x_copy);
 						}
 						else
 						{
-							// std::cout << "\033[1;31m" << "(__elems_after <= __n)" << "\033[0m" << std::endl;
-							iterator __old_finish = end();
-							offset = __n - __elems_after;
-							_M_uninitialized_copy(__position, end(), this->_finish);
-							this->_finish += offset;
-							std::fill(__position, __old_finish, __x_copy);
-							_M_uninitialized_fill_n(__old_finish, offset, __x_copy);
+							// std::cout << "\033[1;33m" << "(__elems_after <= __n)" << "\033[0m" << std::endl;
+							// std::cout << "\033[1;34m" << "_M_uninitialized_fill_n" << "\033[0m" << std::endl;
+							// _D_debug();
+							this->_finish = _M_uninitialized_fill_n(this->_finish, __n - __elems_after, __x_copy);
+							// std::cout << "\033[1;34m" << "_M_uninitialized_copy" << "\033[0m" << std::endl;
+							// _D_debug();
+							_M_uninitialized_copy(__position, iterator(__old_finish), this->_finish);
+							this->_finish += __elems_after;
+							// std::cout << "\033[1;34m" << "std::fill" << "\033[0m" << std::endl;
+							// _D_debug();
+							std::fill(__position.base(), __old_finish, __x_copy);
+							// this->_finish += __n;
+							// _D_debug();
 						}
 					}
 					else
 					{
-						// std::cout << "\033[1;31m" << "else" << "\033[0m" << std::endl;
-						const size_type __elems_before = __position.base() - this->_start;
-						_M_reallocate(_M_check_len_err(__n, "vector::_M_fill_insert"));
-						_M_fill_insert(begin() + __elems_before, __n, __x);
+						// std::cout << "\033[1;31m" << "not enough" << "\033[0m" << std::endl;
+						// const size_type __elems_before = __position.base() - this->_start;
+						// _M_reallocate(_M_check_len_err(__n, "vector::_M_fill_insert"));
+						// _M_fill_insert(begin() + __elems_before, __n, __x);
+
+
+						// std::cout << "\033[1;34m" << "_M_check_len_err" << "\033[0m" << std::endl;
+						const size_type __len = _M_check_len_err(__n, "vector::_M_fill_insert");
+						// const size_type __elems_before = __position - begin();
+						// std::cout << "\033[1;34m" << "_M_allocate b" << "\033[0m" << std::endl;
+						pointer __new_start = _M_allocate(__len);
+						// std::cout << "\033[1;34m" << "_M_allocate a" << "\033[0m" << std::endl;
+						pointer __new_finish = __new_start;
+						// std::cout << "\033[1;34m" << "try" << "\033[0m" << std::endl;
+						try
+						{
+							// std::cout << "\033[1;34m" << "_M_uninitialized_copy" << "\033[0m" << std::endl;
+							__new_finish = _M_uninitialized_copy(begin(), __position, __new_start);
+							// std::cout << "\033[1;34m" << "_M_uninitialized_fill_n" << "\033[0m" << std::endl;
+							__new_finish= _M_uninitialized_fill_n(__new_finish, __n, __x);
+							// std::cout << "\033[1;34m" << "_M_uninitialized_copy" << "\033[0m" << std::endl;
+							__new_finish = _M_uninitialized_copy(__position, end(), __new_finish);
+						}
+						catch(...)
+						{
+							_M_destroy(__new_start, __new_finish);
+							_M_deallocate(__new_start, __len);
+							throw;
+						}
+						_M_destroy(this->_start, this->_finish);
+						_M_deallocate(this->_start, this->_end_of_storage - this->_start);
+						this->_start = __new_start;
+						this->_finish = __new_finish;
+						this->_end_of_storage = __new_start + __len;
 					}
+				}
+			}
+
+			void
+			_M_fill_insert(iterator __position, size_type __n, const value_type& __x)
+			{
+				if (__n == 0)
+					return;
+				if (size_type(this->_end_of_storage - this->_finish) >= __n)
+				{
+					// std::cout << "\033[1;32m" << "enough" << "\033[0m" << std::endl;
+					size_type offset;
+					size_type n_move = end() - __position;
+					value_type __x_copy = __x;
+					if (n_move > __n)
+					{
+						// std::cout << "\033[1;33m" << "(n_move > __n)" << "\033[0m" << std::endl;
+						offset = n_move - __n;
+						// std::cout << "\033[1;34m" << "_M_uninitialized_copy" << "\033[0m" << std::endl;
+						this->_finish = _M_uninitialized_copy(__position + offset, end(), this->_finish);
+						// std::cout << "\033[1;34m" << "std::copy_backward" << "\033[0m" << std::endl;
+						std::copy_backward(__position, __position + offset, __position + n_move);
+						// std::cout << "\033[1;34m" << "std::fill_n" << "\033[0m" << std::endl;
+						std::fill_n(__position, __n, __x_copy);
+					}
+					else
+					{
+						// std::cout << "\033[1;33m" << "(n_move <= __n)" << "\033[0m" << std::endl;
+						iterator __old_finish(this->_finish);
+						offset = __n - n_move;
+						this->_finish = _M_uninitialized_copy(__position, end(), __position.base() + __n);
+						std::fill(__position, __old_finish, __x_copy);
+						this->_finish = _M_uninitialized_fill_n(__old_finish.base(), offset, __x_copy);
+					}
+				}
+				else
+				{
+					// std::cout << "\033[1;31m" << "not enough" << "\033[0m" << std::endl;
+					const size_type idx = __position.base() - this->_start;
+					_M_reallocate(_M_check_len_err(__n, "vector::_M_fill_insert"));
+					_M_fill_insert(begin() + idx, __n, __x);
 				}
 			}
 
@@ -257,6 +363,12 @@ namespace ft
 					_M_uninitialized_fill_n(this->_start, __n, __x);
 			}
 
+			/// @brief copy into uninitialized memory via construct
+			/// @tparam _InputIterator iterator type
+			/// @param __first iterator to the first element to be copied
+			/// @param __last iterator to the last element to be copied
+			/// @param __result pointer to the first element to be filled
+			/// @return pointer to the last element filled
 			template <typename _InputIterator>
 			pointer
 			_M_uninitialized_copy(_InputIterator __first, _InputIterator __last, pointer __result)
@@ -296,12 +408,12 @@ namespace ft
 			pointer
 			_M_uninitialized_copy_backword(pointer __first, pointer __last, pointer __result)
 			{
-				pointer __cur = __result;
+				pointer __cur(__result);
 				try
 				{
 					for (; __last != __first; --__last, --__cur)
 						_alloc.construct(__cur, *(__last - 1));
-					return __cur;
+					return __result;
 				}
 				catch (...)
 				{
@@ -347,9 +459,21 @@ namespace ft
 			void
 			_D_debug()
 			{
-				// std::cout << "\033[1;31m" << "start: " << *this->_start << "\033[0m" << std::endl;
-				std::cout << "\033[1;31m" << "size: " << size() << "\033[0m" << std::endl;
-				std::cout << "\033[1;31m" << "capacity: " << capacity() << "\033[0m" << std::endl;
+				std::cout << "\033[1;35m" << "size: " << size() << "\033[0m" << std::endl;
+				std::cout << "\033[1;35m" << "capacity: " << capacity() << "\033[0m" << std::endl;
+				std::cout << "\033[1;35m" << "start:          " << this->_start << "\033[0m" << std::endl;
+				std::cout << "\033[1;35m" << "finish:         " << this->_finish << "\033[0m" << std::endl;
+				std::cout << "\033[1;35m" << "size: " << this->_finish - this->_start << "\033[0m" << std::endl;
+				std::cout << "\033[1;35m" << "end_of_storage: " << this->_end_of_storage << "\033[0m" << std::endl;
+				std::cout << "\033[1;35m" << "vector: " << "\033[0m" << std::endl;
+				for (iterator it = begin(); it != end(); ++it)
+					std::cout << *it << " ";
+				std::cout << std::endl;
+				std::cout << "\033[1;35m" << "vector till cap: " << "\033[0m" << std::endl;
+				for (iterator it = begin(); it.base() != this->_end_of_storage; ++it)
+					std::cout << *it << " ";
+				std::cout << std::endl;
+				std::cout << std::endl;
 			}
 
 			void
@@ -400,6 +524,8 @@ namespace ft
 			size_type
 			_M_check_len_err(size_type __n, const char* __s) const
 			{
+				// std::cout << "\033[1;33m" << "check len err" << "\033[0m" << std::endl;
+				// std::cout << "\033[1;33m" << "__n: " << __n << "\033[0m" << std::endl;
 				if (__n > max_size() - size())
 					throw std::length_error(__s);
 				const size_type __len = size() + (std::max)(size(), __n);
@@ -411,7 +537,6 @@ namespace ft
 			_M_range_insert(iterator __pos, _InputIterator __first,
 				_InputIterator __last, std::input_iterator_tag)
 			{
-				std::cout << "\033[1;33m" << "input it insert" << "\033[0m" << std::endl;
 				if (__pos == end())
 				{
 					for (; __first != __last; ++__first)
@@ -431,16 +556,17 @@ namespace ft
 			{
 				if (__first != __last)
 				{
-					std::cout << "\033[1;33m" << "forward it insert" << "\033[0m" << std::endl;
+					// _D_debug();
+					// std::cout << "\033[1;33m" << "forward it insert" << "\033[0m" << std::endl;
 					const size_type __n = std::distance(__first, __last);
 					if (size_type(this->_end_of_storage - this->_finish) >= __n)
 					{
-						std::cout << "\033[1;31m" << "size_type(this->_end_of_storage - this->_finish) >= __n" << "\033[0m" << std::endl;
+						// std::cout << "\033[1;31m" << "size_type(this->_end_of_storage - this->_finish) >= __n" << "\033[0m" << std::endl;
 						const size_type __elems_after = end() - __position;
 						pointer __old_finish(this->_finish);
 						if (__elems_after > __n)
 						{
-							std::cout << "\033[1;31m" << "__elems_after > __n" << "\033[0m" << std::endl;
+							// std::cout << "\033[1;31m" << "__elems_after > __n" << "\033[0m" << std::endl;
 							_M_uninitialized_copy_backword(this->_finish - __n, this->_finish, this->_finish);
 							this->_finish += __n;
 							std::copy_backward(iterator(__position), iterator(__old_finish - __n), iterator(__old_finish));
@@ -448,47 +574,53 @@ namespace ft
 						}
 						else
 						{
-							std::cout << "\033[1;31m" << "__elems_after <= __n" << "\033[0m" << std::endl;
+							// std::cout << "\033[1;31m" << "__elems_after <= __n" << "\033[0m" << std::endl;
 							_ForwardIterator __mid = __first;
-							std::cout << "\033[1;35m" << "advance" << "\033[0m" << std::endl;
+							// std::cout << "\033[1;35m" << "advance" << "\033[0m" << std::endl;
 							std::advance(__mid, __elems_after);
-							std::cout << "\033[1;35m" << "uninitialized copy" << "\033[0m" << std::endl;
+							// std::cout << "\033[1;35m" << "uninitialized copy" << "\033[0m" << std::endl;
 							_M_uninitialized_copy(__mid, __last, this->_finish);
 							this->_finish += __n - __elems_after;
-							std::cout << "\033[1;35m" << "uninitialized copy backword" << "\033[0m" << std::endl;
+							// std::cout << "\033[1;35m" << "uninitialized copy backword" << "\033[0m" << std::endl;
 							_M_uninitialized_copy_backword(__position.base(), __old_finish, this->_finish);
 							this->_finish += __elems_after;
-							std::cout << "\033[1;35m" << "copy" << "\033[0m" << std::endl;
+							// std::cout << "\033[1;35m" << "copy" << "\033[0m" << std::endl;
 							std::copy(__first, __mid, __position);
 						}
 					}
 					else
 					{
-						std::cout << "\033[1;31m" << "else" << "\033[0m" << std::endl;
+						// std::cout << "\033[1;31m" << "else" << "\033[0m" << std::endl;
 						const size_type __len = _M_check_len_err(__n, "vector::_M_range_insert");
+						// std::cout << "\033[1;35m" << __len << "\033[0m" << std::endl;
 						pointer __new_start = _M_allocate(__len);
 						pointer __new_finish = __new_start;
 						try{
-							std::cout << "\033[1;35m" << "uninitialized copy backword" << "\033[0m" << std::endl;
-							__new_finish = _M_uninitialized_copy_backword(this->_start, __position.base(), __new_start);
-							std::cout << "\033[1;35m" << "uninitialized copy" << "\033[0m" << std::endl;
+							// std::cout << __new_finish << std::endl;
+							// std::cout << "\033[1;35m" << "uninitialized copy backword" << "\033[0m" << std::endl;
+							__new_finish = _M_uninitialized_copy(this->_start, __position.base(), __new_start);
+							// std::cout << __new_finish << std::endl;
+							// std::cout << "\033[1;35m" << "uninitialized copy" << "\033[0m" << std::endl;
 							__new_finish = _M_uninitialized_copy(__first, __last, __new_finish);
-							// __new_finish = std::copy(__first, __last, iterator(__new_finish));
-							std::cout << "\033[1;35m" << "uninitialized copy backword" << "\033[0m" << std::endl;
-							__new_finish = _M_uninitialized_copy_backword(__position.base(), this->_finish, __new_finish);
+							// std::cout << __new_finish << std::endl;
+							// __new_finish = std::copy(__first, __last, iterator(__new_finish)).base();
+							// std::cout << "\033[1;35m" << "uninitialized copy backword" << "\033[0m" << std::endl;
+							__new_finish = _M_uninitialized_copy(__position.base(), this->_finish, __new_finish);
+							// std::cout << __new_finish << std::endl;
 						} catch (...)
 						{
 							_M_destroy(__new_start, __new_finish);
 							_M_deallocate(__new_start, __len);
 							throw;
 						}
-						std::cout << "\033[1;35m" << "destroy" << "\033[0m" << std::endl;
+						// std::cout << "\033[1;35m" << "destroy" << "\033[0m" << std::endl;
 						_M_destroy(this->_start, this->_finish);
 						_M_deallocate(this->_start, this->_end_of_storage - this->_start);
 						this->_start = __new_start;
 						this->_finish = __new_finish;
 						this->_end_of_storage = __new_start + __len;
 					}
+					// _D_debug();
 				}
 			}
 
@@ -574,32 +706,6 @@ namespace ft
 			// }
 
 			void
-			_M_realloc_insert(iterator __pos, const value_type& __x)
-			{
-				const size_type __len = _M_check_len_err(size_type(1), "vector::_M_realloc_insert");
-				pointer __old_start = this->_start;
-				pointer __old_finish = this->_finish;
-				const size_type __elems_before = __pos - begin();
-				pointer __new_start(_M_allocate(__len));
-				pointer __new_finish(__new_start);
-				try {
-					this->_alloc.construct(__new_start + __elems_before, __x);
-					__new_finish = _M_uninitialized_copy_backword(__old_start, __pos.base(), __new_start);
-					++__new_finish;
-					__new_finish = _M_uninitialized_copy_backword(__pos.base(), __old_finish, __new_finish);
-				} catch (...) {
-					_M_destroy(__new_start, __new_finish);
-					_M_deallocate(__new_start, __len);
-					throw;
-				}
-				_M_destroy(__old_start, __old_finish);
-				_M_deallocate(__old_start, __old_finish - __old_start);
-				this->_start = __new_start;
-				this->_finish = __new_finish;
-				this->_end_of_storage = __new_start + __len;
-			}
-
-			void
 			_M_insert_aux(iterator __pos, const value_type& __x)
 			{
 				this->_alloc.construct(this->_finish, *(this->_finish - 1));
@@ -641,7 +747,7 @@ namespace ft
 			vector(const vector& __x)
 				: _alloc(__x.get_allocator())
 			{
-				_M_create_storage(_M_check_len(__x.size()));
+				_M_create_storage(_M_check_init_len(__x.size()));
 				this->_finish = _M_uninitialized_copy(__x.begin(), __x.end(), this->_start);
 			}
 
@@ -702,9 +808,13 @@ namespace ft
 					else
 					{
 						std::copy(__x._start, __x._start + size(), this->_start);
-						std::uninitialized_copy(__x._start + size(), __x._finish, this->_finish);
+						_M_uninitialized_copy(__x._start + size(), __x._finish, this->_finish);
 					}
 					this->_finish = this->_start + __xlen;
+					// clear();
+					// _M_deallocate(this->_start, capacity());
+					// _M_create_storage(_M_check_init_len(__x.size()));
+					// this->_finish = _M_uninitialized_copy(__x.begin(), __x.end(), this->_start);
 				}
 				return *this;
 			}
@@ -911,8 +1021,7 @@ namespace ft
 				else
 				{
 					// std::cout << "\033[1;33m" << "expand" << "\033[0m" << std::endl;
-					_M_reallocate(_M_check_len(1));
-					push_back(__x);
+					_M_realloc_insert(end(), __x);
 				}
 				// _D_debug();
 			}
@@ -927,7 +1036,7 @@ namespace ft
 			iterator
 			insert(iterator __pos, const value_type& __x)
 			{
-				std::cout << "\033[1;32m" << "insert 1" << "\033[0m" << std::endl;
+				// std::cout << "\033[1;32m" << "insert 1" << "\033[0m" << std::endl;
 				const size_type __elem_before = __pos - begin();
 				_M_fill_insert(__pos, 1, __x);
 				return begin() + __elem_before;
@@ -936,8 +1045,11 @@ namespace ft
 			void
 			insert(iterator __pos, size_type __n, const value_type& __x)
 			{
-				std::cout << "\033[1;32m" << "insert fill" << "\033[0m" << std::endl;
-				_M_fill_insert(__pos, __n, __x);
+				// std::cout << "\033[1;32m" << "insert fill" << "\033[0m" << std::endl;
+				// std::cout << __n << std::endl;
+				// _D_debug();
+				_M_fill_insert_2(__pos, __n, __x);
+				// _D_debug();
 			}
 
 			template <typename _InputIterator>
@@ -945,7 +1057,7 @@ namespace ft
 			insert(iterator __pos, _InputIterator __first, _InputIterator __last,
 				typename ft::enable_if<!ft::is_integral<_InputIterator>::value>::type* = 0)
 			{
-				std::cout << "\033[1;32m" << "insert range" << "\033[0m" << std::endl;
+				// std::cout << "\033[1;32m" << "insert range" << "\033[0m" << std::endl;
 				_M_range_insert(__pos, __first, __last, ft::_iterator_category(__first));
 			}
 
