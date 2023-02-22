@@ -1,0 +1,133 @@
+Empty: 1
+Size: 0
+Element: 
+
+Insert with value ==================================================================================
+
+Inserted: o
+Empty: 0
+Size: 1
+Element: o 
+Existed: o
+Empty: 0
+Size: 1
+Element: o 
+Inserted: p
+Empty: 0
+Size: 2
+Element: o p 
+================================================================================================ END
+
+
+Hint insert ========================================================================================
+
+Value: f
+Empty: 0
+Size: 3
+Element: f o p 
+Value: o
+Empty: 0
+Size: 3
+Element: f o p 
+Value: o
+Empty: 0
+Size: 3
+Element: f o p 
+Value: b
+Empty: 0
+Size: 4
+Element: b f o p 
+Value: a
+Empty: 0
+Size: 5
+Element: a b f o p 
+Value: r
+Empty: 0
+Size: 6
+Element: a b f o p r 
+================================================================================================ END
+
+
+Range insert =======================================================================================
+
+Empty: 0
+Size: 6
+Element: a b f o p r 
+Empty: 0
+Size: 17
+Element:   , . 2 4 B K a b e f h k l o p r 
+================================================================================================ END
+
+
+Position Erase =====================================================================================
+
+Empty: 0
+Size: 16
+Element:   , . 2 4 B K a b e f h k l o p 
+Empty: 0
+Size: 15
+Element: , . 2 4 B K a b e f h k l o p 
+Empty: 0
+Size: 14
+Element: , . 4 B K a b e f h k l o p 
+================================================================================================ END
+
+
+Key Erase ==========================================================================================
+
+Erased 0 element(s)
+Empty: 0
+Size: 14
+Element: , . 4 B K a b e f h k l o p 
+Erased 1 element(s)
+Empty: 0
+Size: 13
+Element: , . 4 B K a b e f h l o p 
+Erased 0 element(s)
+Empty: 0
+Size: 13
+Element: , . 4 B K a b e f h l o p 
+================================================================================================ END
+
+
+Range Erase ========================================================================================
+
+Empty: 0
+Size: 13
+Element: , . 4 B K a b e f h l o p 
+Empty: 0
+Size: 12
+Element: . 4 B K a b e f h l o p 
+Empty: 0
+Size: 11
+Element: . 4 B K a b e f h l o 
+================================================================================================ END
+
+
+Swap ===============================================================================================
+
+Empty: 1
+Size: 0
+Element: 
+Empty: 0
+Size: 12
+Element:   , . 2 4 B K e h k l o 
+Empty: 0
+Size: 12
+Element:   , . 2 4 B K e h k l o 
+Empty: 1
+Size: 0
+Element: 
+================================================================================================ END
+
+
+Clear ==============================================================================================
+
+Empty: 1
+Size: 0
+Element: 
+Empty: 1
+Size: 0
+Element: 
+================================================================================================ END
+

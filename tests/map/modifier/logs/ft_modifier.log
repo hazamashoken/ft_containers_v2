@@ -1,0 +1,90 @@
+
+Insert value =======================================================================================
+
+Inserted: (0, zero)
+Size: 1
+Element: (0, zero) 
+Fail to insert duplicate key
+Exist Value: (0, zero)
+Size: 1
+Element: (0, zero) 
+================================================================================================ END
+
+
+Hint Insert ========================================================================================
+
+Value: (99, Ninety Nine)
+Size: 2
+Element: (99, Ninety Nine) (0, zero) 
+Value: (-1, Negative one)
+Size: 3
+Element: (99, Ninety Nine) (0, zero) (-1, Negative one) 
+Value: (-1, Negative one)
+Size: 3
+Element: (99, Ninety Nine) (0, zero) (-1, Negative one) 
+================================================================================================ END
+
+
+Range Insert =======================================================================================
+
+Size: 3
+Element: (99, Ninety Nine) (0, zero) (-1, Negative one) 
+Size: 12
+Element: (99, Ninety Nine) (9, nine) (8, eight) (7, seven) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) (-1, Negative one) 
+================================================================================================ END
+
+
+Erase at Position ==================================================================================
+
+Size: 11
+Element: (99, Ninety Nine) (9, nine) (8, eight) (7, seven) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) 
+Size: 10
+Element: (99, Ninety Nine) (9, nine) (8, eight) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) 
+================================================================================================ END
+
+
+Erase with key =====================================================================================
+
+Erase 1 element(s)
+Size: 9
+Element: (9, nine) (8, eight) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) 
+Erase 0 element(s)
+Size: 9
+Element: (9, nine) (8, eight) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) 
+Erase 0 element(s)
+Size: 9
+Element: (9, nine) (8, eight) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) 
+================================================================================================ END
+
+
+Erase range ========================================================================================
+
+Size: 9
+Element: (9, nine) (8, eight) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) 
+Size: 7
+Element: (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) (0, zero) 
+Size: 6
+Element: (6, six) (5, five) (4, four) (3, three) (1, one) (0, zero) 
+Size: 0
+Element: 
+================================================================================================ END
+
+
+Swap ===============================================================================================
+
+Size: 1
+Element: (42, 42 Bangkok) 
+Size: 9
+Element: (9, nine) (8, eight) (7, seven) (6, six) (5, five) (4, four) (3, three) (2, two) (1, one) 
+Size: 0
+Element: 
+Size: 1
+Element: (42, 42 Bangkok) 
+Size: 0
+Element: 
+Size: 0
+Element: 
+Size: 0
+Element: 
+================================================================================================ END
+

@@ -1,0 +1,266 @@
+
+Find on empty ======================================================================================
+
+return: end()
+================================================================================================ END
+
+
+Find on contents set ===============================================================================
+
+return: end()
+return: 4
+return: 2
+================================================================================================ END
+
+
+Count on empty =====================================================================================
+
+Count: 0
+Count: 0
+================================================================================================ END
+
+
+Count on contents set ==============================================================================
+
+Count: 0
+Count: 1
+================================================================================================ END
+
+
+Lower bound on empty ===============================================================================
+
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+================================================================================================ END
+
+
+Lower bound on contents set ========================================================================
+
+return: K
+return: K
+return: K
+return: K
+return: e
+return: e
+return: e
+return: h
+return: h
+return: h
+return: k
+return: l
+return: l
+return: l
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+================================================================================================ END
+
+
+Upper bound on empty ===============================================================================
+
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+================================================================================================ END
+
+
+Upper bound on contents set ========================================================================
+
+return: K
+return: K
+return: K
+return: K
+return: K
+return: e
+return: e
+return: e
+return: h
+return: h
+return: h
+return: k
+return: l
+return: l
+return: l
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+================================================================================================ END
+
+
+Equal range on empty ===============================================================================
+
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+return: end()
+================================================================================================ END
+
+
+Equal range on contents set ========================================================================
+
+return: K
+return: K
+return: K
+return: K
+return: K
+return: K
+return: K
+return: K
+return: e
+return: K
+return: e
+return: e
+return: e
+return: e
+return: h
+return: e
+return: h
+return: h
+return: h
+return: h
+return: k
+return: h
+return: l
+return: k
+return: l
+return: l
+return: l
+return: l
+return: o
+return: l
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+return: o
+================================================================================================ END
+

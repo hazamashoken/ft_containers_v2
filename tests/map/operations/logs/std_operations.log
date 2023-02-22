@@ -1,0 +1,137 @@
+
+Find ===============================================================================================
+
+Key not found
+Key not found
+Key not found
+(5, five)
+================================================================================================ END
+
+
+Count ==============================================================================================
+
+Count: 0
+Count: 0
+Count: 0
+Count: 1
+================================================================================================ END
+
+
+Lower bound ========================================================================================
+
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+(1, one)
+(2, two)
+(3, three)
+(4, four)
+(5, five)
+(6, six)
+(7, seven)
+(8, eight)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+================================================================================================ END
+
+
+Upper bound ========================================================================================
+
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+(1, one)
+(2, two)
+(3, three)
+(4, four)
+(5, five)
+(6, six)
+(7, seven)
+(8, eight)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+================================================================================================ END
+
+
+Equal range ========================================================================================
+
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+end() return
+(1, one)
+end() return
+(2, two)
+(1, one)
+(3, three)
+(2, two)
+(4, four)
+(3, three)
+(5, five)
+(4, four)
+(6, six)
+(5, five)
+(7, seven)
+(6, six)
+(8, eight)
+(7, seven)
+(9, nine)
+(8, eight)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+(9, nine)
+================================================================================================ END
+
