@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:08:00 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/23 01:37:56 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/02/23 01:41:43 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,7 @@ namespace ft
 			size_type
 			_M_max_size(const allocator_type& __a = allocator_type()) const
 			{
-// # if !__apple__
-				// return __a.max_size();
-// # else
 				return std::min<size_type>(__a.max_size(), std::numeric_limits<difference_type>::max());
-// # endif
 			}
 
 
