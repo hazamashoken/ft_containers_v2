@@ -6,15 +6,15 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:38 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/23 02:03:01 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/02/23 02:43:11 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __FT_ITERATOR_HPP__
 # define __FT_ITERATOR_HPP__
 
-# include "../type_traits.hpp"
-# include "iterator_base_func.hpp"
+# include "../utils/ft_enable_if.hpp"
+# include "../utils/ft_type_traits.hpp"
 # include "iterator_base_types.hpp"
 
 namespace ft
