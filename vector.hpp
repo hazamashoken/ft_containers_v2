@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:08:00 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/23 01:41:43 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/02/23 02:03:58 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ namespace ft
 			typedef typename _Alloc::const_pointer		const_pointer;
 
 		public:
-			typedef typename ft::base_iterator<pointer>				iterator;
-			typedef typename ft::base_iterator<const_pointer>		const_iterator;
+			typedef typename ft::base_iterator<pointer, vector>				iterator;
+			typedef typename ft::base_iterator<const_pointer, vector>		const_iterator;
 			typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 

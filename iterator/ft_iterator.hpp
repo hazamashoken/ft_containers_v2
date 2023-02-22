@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 21:41:38 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/22 23:59:22 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/02/23 02:03:01 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ namespace ft
 	using ft::iterator;
 
 	template <typename _Iterator, typename _Container>
-	class __normal_iterator
+	class base_iterator
 	{
 		protected:
 			_Iterator _M_current;
@@ -250,15 +250,15 @@ namespace ft
 			typedef typename __traits_type::reference			reference;
 			typedef typename __traits_type::pointer				pointer;
 
-			__normal_iterator()
+			base_iterator()
 			: _M_current(_Iterator()) { }
 
 			explicit
-			__normal_iterator(const _Iterator& __i)
+			base_iterator(const _Iterator& __i)
 			: _M_current(__i) { }
 
 			template <typename _Iter>
-			__normal_iterator(const __normal_iterator<_Iter,
+			base_iterator(const base_iterator<_Iter,
 					typename ft::__enable_if<
 					(ft::__are_same<_Iter, typename _Container::pointer>::__value),
 					_Container>::__type>& __i)
@@ -272,47 +272,47 @@ namespace ft
 			operator->() const
 			{ return _M_current; }
 
-			__normal_iterator&
+			base_iterator&
 			operator++()
 			{
 				++_M_current;
 				return *this;
 			}
 
-			__normal_iterator
+			base_iterator
 			operator++(int)
-			{ return __normal_iterator(_M_current++); }
+			{ return base_iterator(_M_current++); }
 
-			__normal_iterator&
+			base_iterator&
 			operator--()
 			{
 				--_M_current;
 				return *this;
 			}
 
-			__normal_iterator
+			base_iterator
 			operator--(int)
-			{ return __normal_iterator(_M_current--); }
+			{ return base_iterator(_M_current--); }
 
 			reference
 			operator[](difference_type __n) const
 			{ return _M_current[__n]; }
 
-			__normal_iterator&
+			base_iterator&
 			operator+=(difference_type __n)
 			{ _M_current += __n; return *this; }
 
-			__normal_iterator
+			base_iterator
 			operator+(difference_type __n) const
-			{ return __normal_iterator(_M_current + __n); }
+			{ return base_iterator(_M_current + __n); }
 
-			__normal_iterator&
+			base_iterator&
 			operator-=(difference_type __n)
 			{ _M_current -= __n; return *this; }
 
-			__normal_iterator
+			base_iterator
 			operator-(difference_type __n) const
-			{ return __normal_iterator(_M_current - __n); }
+			{ return base_iterator(_M_current - __n); }
 
 			const _Iterator&
 			base() const
@@ -321,93 +321,93 @@ namespace ft
 
 	template <typename _IteratorL, typename _IteratorR, typename _Container>
 	inline bool
-	operator==(const __normal_iterator<_IteratorL, _Container>& __lhs,
-			const __normal_iterator<_IteratorR, _Container>& __rhs)
+	operator==(const base_iterator<_IteratorL, _Container>& __lhs,
+			const base_iterator<_IteratorR, _Container>& __rhs)
 	{ return __lhs.base() == __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
 	inline bool
-	operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
-			const __normal_iterator<_Iterator, _Container>& __rhs)
+	operator==(const base_iterator<_Iterator, _Container>& __lhs,
+			const base_iterator<_Iterator, _Container>& __rhs)
 	{ return __lhs.base() == __rhs.base(); }
 
 	template <typename _IteratorL, typename _IteratorR, typename _Container>
 	inline bool
-	operator!=(const __normal_iterator<_IteratorL, _Container>& __lhs,
-			const __normal_iterator<_IteratorR, _Container>& __rhs)
+	operator!=(const base_iterator<_IteratorL, _Container>& __lhs,
+			const base_iterator<_IteratorR, _Container>& __rhs)
 	{ return __lhs.base() != __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
 	inline bool
-	operator!=(const __normal_iterator<_Iterator, _Container>& __lhs,
-			const __normal_iterator<_Iterator, _Container>& __rhs)
+	operator!=(const base_iterator<_Iterator, _Container>& __lhs,
+			const base_iterator<_Iterator, _Container>& __rhs)
 	{ return __lhs.base() != __rhs.base(); }
 
 	template <typename _IteratorL, typename _IteratorR, typename _Container>
 	inline bool
-	operator<(const __normal_iterator<_IteratorL, _Container>& __lhs,
-			const __normal_iterator<_IteratorR, _Container>& __rhs)
+	operator<(const base_iterator<_IteratorL, _Container>& __lhs,
+			const base_iterator<_IteratorR, _Container>& __rhs)
 	{ return __lhs.base() < __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
 	inline bool
-	operator<(const __normal_iterator<_Iterator, _Container>& __lhs,
-			const __normal_iterator<_Iterator, _Container>& __rhs)
+	operator<(const base_iterator<_Iterator, _Container>& __lhs,
+			const base_iterator<_Iterator, _Container>& __rhs)
 	{ return __lhs.base() < __rhs.base(); }
 
 	template <typename _IteratorL, typename _IteratorR, typename _Container>
 	inline bool
-	operator>(const __normal_iterator<_IteratorL, _Container>& __lhs,
-			const __normal_iterator<_IteratorR, _Container>& __rhs)
+	operator>(const base_iterator<_IteratorL, _Container>& __lhs,
+			const base_iterator<_IteratorR, _Container>& __rhs)
 	{ return __lhs.base() > __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
 	inline bool
-	operator>(const __normal_iterator<_Iterator, _Container>& __lhs,
-			const __normal_iterator<_Iterator, _Container>& __rhs)
+	operator>(const base_iterator<_Iterator, _Container>& __lhs,
+			const base_iterator<_Iterator, _Container>& __rhs)
 	{ return __lhs.base() > __rhs.base(); }
 
 	template <typename _IteratorL, typename _IteratorR, typename _Container>
 	inline bool
-	operator<=(const __normal_iterator<_IteratorL, _Container>& __lhs,
-			const __normal_iterator<_IteratorR, _Container>& __rhs)
+	operator<=(const base_iterator<_IteratorL, _Container>& __lhs,
+			const base_iterator<_IteratorR, _Container>& __rhs)
 	{ return __lhs.base() <= __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
 	inline bool
-	operator<=(const __normal_iterator<_Iterator, _Container>& __lhs,
-			const __normal_iterator<_Iterator, _Container>& __rhs)
+	operator<=(const base_iterator<_Iterator, _Container>& __lhs,
+			const base_iterator<_Iterator, _Container>& __rhs)
 	{ return __lhs.base() <= __rhs.base(); }
 
 	template <typename _IteratorL, typename _IteratorR, typename _Container>
 	inline bool
-	operator>=(const __normal_iterator<_IteratorL, _Container>& __lhs,
-			const __normal_iterator<_IteratorR, _Container>& __rhs)
+	operator>=(const base_iterator<_IteratorL, _Container>& __lhs,
+			const base_iterator<_IteratorR, _Container>& __rhs)
 	{ return __lhs.base() >= __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
 	inline bool
-	operator>=(const __normal_iterator<_Iterator, _Container>& __lhs,
-			const __normal_iterator<_Iterator, _Container>& __rhs)
+	operator>=(const base_iterator<_Iterator, _Container>& __lhs,
+			const base_iterator<_Iterator, _Container>& __rhs)
 	{ return __lhs.base() >= __rhs.base(); }
 
 	template <typename _IteratorL, typename _IteratorR, typename _Container>
-	inline typename __normal_iterator<_IteratorL, _Container>::difference_type
-	operator-(const __normal_iterator<_IteratorL, _Container>& __lhs,
-			const __normal_iterator<_IteratorR, _Container>& __rhs)
+	inline typename base_iterator<_IteratorL, _Container>::difference_type
+	operator-(const base_iterator<_IteratorL, _Container>& __lhs,
+			const base_iterator<_IteratorR, _Container>& __rhs)
 	{ return __lhs.base() - __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
-	inline typename __normal_iterator<_Iterator, _Container>::difference_type
-	operator-(const __normal_iterator<_Iterator, _Container>& __lhs,
-			const __normal_iterator<_Iterator, _Container>& __rhs)
+	inline typename base_iterator<_Iterator, _Container>::difference_type
+	operator-(const base_iterator<_Iterator, _Container>& __lhs,
+			const base_iterator<_Iterator, _Container>& __rhs)
 	{ return __lhs.base() - __rhs.base(); }
 
 	template <typename _Iterator, typename _Container>
-	inline __normal_iterator<_Iterator, _Container>
-	operator+(typename __normal_iterator<_Iterator, _Container>::difference_type __n,
-			const __normal_iterator<_Iterator, _Container>& __i)
-	{ return __normal_iterator<_Iterator, _Container>(__i.base() + __n); }
+	inline base_iterator<_Iterator, _Container>
+	operator+(typename base_iterator<_Iterator, _Container>::difference_type __n,
+			const base_iterator<_Iterator, _Container>& __i)
+	{ return base_iterator<_Iterator, _Container>(__i.base() + __n); }
 
 }
 

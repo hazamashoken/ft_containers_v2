@@ -6,7 +6,7 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 12:21:31 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/21 12:32:42 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/02/23 01:55:49 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,40 +30,40 @@ namespace ft
 			typedef typename container_type::const_reference	const_reference;
 
 		protected:
-			container_type _c;
+			container_type c;
 
 		public:
 			explicit
 			stack(const container_type& ctn = container_type())
-				: _c(ctn) {}
+				: c(ctn) {}
 
 			bool
 			empty() const
-			{ return (_c.empty()); }
+			{ return (c.empty()); }
 
 			size_type
 			size() const
-			{ return (_c.size()); }
+			{ return (c.size()); }
 
 			reference
 			top()
-			{ return (_c.back()); }
+			{ return (c.back()); }
 
 			const_reference
 			top() const
-			{ return (_c.back()); }
+			{ return (c.back()); }
 
 			void
 			push(const value_type& val)
-			{ _c.push_back(val); }
+			{ c.push_back(val); }
 
 			void
 			pop()
-			{ _c.pop_back(); }
+			{ c.pop_back(); }
 
 			void
 			swap(stack& x)
-			{ _c.swap(x._c); }
+			{ c.swap(x.c); }
 
 			template <typename Tp, typename Container>
 			friend inline bool
@@ -77,12 +77,12 @@ namespace ft
 	template <typename _Tp, typename _Container>
 	inline bool
 	operator==(const stack<_Tp, _Container>& x, const stack<_Tp, _Container>& y)
-	{ return (x._c == y._c); }
+	{ return (x.c == y.c); }
 
 	template <typename _Tp, typename _Container>
 	inline bool
 	operator<(const stack<_Tp, _Container>& x, const stack<_Tp, _Container>& y)
-	{ return (x._c < y._c); }
+	{ return (x.c < y.c); }
 
 	template <typename _Tp, typename _Container>
 	inline bool
