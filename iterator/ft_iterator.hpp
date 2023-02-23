@@ -5,16 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 21:41:38 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/23 02:43:11 by tliangso         ###   ########.fr       */
+/*   Created: 2023/02/12 21:41:38 by tliangso          #+#    #+#             */
+/*   Updated: 2023/02/23 19:37:51 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __FT_ITERATOR_HPP__
 # define __FT_ITERATOR_HPP__
 
-# include "../utils/ft_enable_if.hpp"
-# include "../utils/ft_type_traits.hpp"
+# include "../type_traits.hpp"
 # include "iterator_base_types.hpp"
 
 namespace ft
@@ -259,9 +258,9 @@ namespace ft
 
 			template <typename _Iter>
 			base_iterator(const base_iterator<_Iter,
-					typename ft::__enable_if<
-					(ft::__are_same<_Iter, typename _Container::pointer>::__value),
-					_Container>::__type>& __i)
+					typename ft::enable_if<
+					(ft::are_same<_Iter, typename _Container::pointer>::value),
+					_Container>::type>& __i)
 			: _M_current(__i.base()) { }
 
 			reference

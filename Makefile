@@ -13,4 +13,4 @@ map:
 set:
 	@ make set -C tests
 
-.PHONY: vector stack map set
+.PHONY: vector stack map set clean

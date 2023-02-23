@@ -6,14 +6,12 @@
 /*   By: tliangso <earth78203@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:08:00 by tliangso          #+#    #+#             */
-/*   Updated: 2023/02/23 02:03:58 by tliangso         ###   ########.fr       */
+/*   Updated: 2023/02/23 19:44:22 by tliangso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
-
-// std=c++98
 
 # include <iostream>
 # include <string>
@@ -21,9 +19,9 @@
 # include <limits>
 
 # include "iterator.hpp"
-# include "utils/algorithm.hpp"
+# include "algorithm.hpp"
 # include "type_traits.hpp"
-# include "utils/utility.hpp"
+# include "utility.hpp"
 
 namespace ft
 {
@@ -397,6 +395,7 @@ namespace ft
 				this->_finish = _M_uninitialized_copy(__first, __last, this->_start);
 			}
 
+			/// @brief print the size, capacity, start, finish, end_of_storage (DEBUG ONLY)
 			void
 			_D_debug()
 			{
@@ -660,7 +659,7 @@ namespace ft
 			/// @brief default constructor
 			/// @param alloc allocator to be used
 			explicit vector(const allocator_type& __a = allocator_type())
-				: _start(u_nullptr), _finish(u_nullptr), _end_of_storage(u_nullptr), _alloc(__a)
+				: _start(0), _finish(0), _end_of_storage(0), _alloc(__a)
 			{}
 
 			/// @brief fill constructor
@@ -669,7 +668,7 @@ namespace ft
 			/// @param alloc allocator to be used
 			explicit vector(size_type __n, const value_type& __x = value_type(),
 				const allocator_type& __a = allocator_type())
-				: _start(u_nullptr), _finish(u_nullptr), _end_of_storage(u_nullptr), _alloc(__a)
+				: _start(0), _finish(0), _end_of_storage(0), _alloc(__a)
 			{
 				_M_create_storage(_M_check_len(__n));
 				this->_finish = _M_uninitialized_fill_n(this->_start, __n, __x);
